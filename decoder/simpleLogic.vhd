@@ -1,125 +1,71 @@
--- AND2
+-- Logic needed to implement the parallel decoder
+-- AND3
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
-ENTITY gateAnd2 IS
-	PORT (x0, x1: IN STD_LOGIC;
+ENTITY gateAND3 IS
+	PORT (x2, x1, x0: IN STD_LOGIC;
         y: OUT STD_LOGIC);
-END gateAnd2;
+END gateAND3;
 
-ARCHITECTURE logicFunction OF gateAnd2 IS
+ARCHITECTURE logicFunction OF gateAND3 IS
 BEGIN
-  y <= x0 AND x1;
-END logicFunction;
-
--- NAND2
-LIBRARY ieee;
-USE ieee.std_logic_1164.all;
-
-ENTITY gateNand2 IS
-  PORT (x0, x1: IN STD_LOGIC;
-        y: OUT STD_LOGIC);
-END gateNand2;
-
-ARCHITECTURE logicFunction OF gateNand2 IS
-BEGIN
-  y <= NOT (x0 AND x1);
-END logicFunction;
-
--- NOR2
-LIBRARY ieee;
-USE ieee.std_logic_1164.all;
-
-ENTITY gateNor2 IS
-  PORT (x0, x1: IN STD_LOGIC;
-        y: OUT STD_LOGIC);
-END gateNor2;
-
-ARCHITECTURE logicFunction OF gateNor2 IS
-BEGIN
-  y <= NOT (x0 OR x1);
-END logicFunction;
-
--- OR2
-LIBRARY ieee;
-USE ieee.std_logic_1164.all;
-
-ENTITY gateOr2 IS
-  PORT (x0, x1: IN STD_LOGIC;
-        y: OUT STD_LOGIC);
-END gateOr2;
-
-ARCHITECTURE logicFunction OF gateOr2 IS
-BEGIN
-  y <= x0 OR x1;
-END logicFunction;
-
--- XOR2
-LIBRARY ieee;
-USE ieee.std_logic_1164.all;
-
-ENTITY gateXOr2 IS
-  PORT (x0, x1: IN STD_LOGIC;
-        y: OUT STD_LOGIC);
-END gateXOr2;
-
-ARCHITECTURE logicFunction OF gateXOr2 IS
-BEGIN
-  y <= x0 XOR x1;
+  y <= x2 AND x1 AND x0;
 END logicFunction;
 
 -- AND4
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
-ENTITY gateAnd4 IS
-  PORT (x0, x1, x2, x3: IN STD_LOGIC;
+ENTITY gateAND4 IS
+	PORT (x3, x2, x1, x0: IN STD_LOGIC;
         y: OUT STD_LOGIC);
-END gateAnd4;
+END gateAND4;
 
-ARCHITECTURE logicFunction OF gateAnd4 IS
+ARCHITECTURE logicFunction OF gateAND4 IS
 BEGIN
-  y <= x0 AND x1 AND x2 AND x3;
+  y <= x3 AND x2 AND x1 AND x0;
+END logicFunction;
+
+-- OR4
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+
+ENTITY gateOR4 IS
+  PORT (x3, x2, x1, x0: IN STD_LOGIC;
+        y: OUT STD_LOGIC);
+END gateOR4;
+
+ARCHITECTURE logicFunction OF gateOR4 IS
+BEGIN
+  y <= x3 OR x2 OR x1 OR x0;
+END logicFunction;
+
+-- XOR2
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+
+ENTITY gateXOR2 IS
+  PORT (x1, x0: IN STD_LOGIC;
+        y: OUT STD_LOGIC);
+END gateXOR2;
+
+ARCHITECTURE logicFunction OF gateXOR2 IS
+BEGIN
+  y <= x1 XOR x0;
 END logicFunction;
 
 -- NOT
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
-ENTITY gateNot IS
+ENTITY gateNOT IS
   PORT (x0: IN STD_LOGIC;
         y: OUT STD_LOGIC);
-END gateNot;
+END gateNOT;
 
-ARCHITECTURE logicFunction OF gateNot IS
+ARCHITECTURE logicFunction OF gateNOT IS
 BEGIN
   y <= NOT x0;
 END logicFunction;
 
--- CONCATENATE4
-LIBRARY ieee;
-USE ieee.std_logic_1164.all;
-
-ENTITY gateConc4 IS
-  PORT (x0, x1, x2, x3: IN STD_LOGIC;
-        y: OUT STD_LOGIC_VECTOR(3 downto 0));
-END gateConc4;
-
-ARCHITECTURE logicFunction OF gateConc4 IS
-BEGIN
-  y <= x0 & x1 & x2 & x3;
-END logicFunction;
-
--- CONCATENATE8
-LIBRARY ieee;
-USE ieee.std_logic_1164.all;
-
-ENTITY gateConc8 IS
-  PORT (x0, x1, x2, x3, x4, x5, x6, x7: IN STD_LOGIC;
-        y: OUT STD_LOGIC_VECTOR(7 downto 0));
-END gateConc8;
-
-ARCHITECTURE logicFunction OF gateConc8 IS
-BEGIN
-  y <= x0 & x1 & x2 & x3 & x4 & x5 & x6 & x7;
-END logicFunction;
