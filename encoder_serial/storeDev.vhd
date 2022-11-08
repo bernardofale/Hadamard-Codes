@@ -1,3 +1,4 @@
+-- FlipFlopD
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
@@ -25,8 +26,7 @@ BEGIN
   END PROCESS;
 END behavior;
 
-------------------------------------------------------
-
+-- binCounter 3 bits
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
@@ -69,8 +69,7 @@ BEGIN
   c(2) <= iQ2;
 END structure;
 
-------------------------------------------------------
-
+-- ParReg 8 bits
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 

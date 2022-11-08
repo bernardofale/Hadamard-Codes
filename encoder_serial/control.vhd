@@ -4,7 +4,10 @@ USE ieee.std_logic_arith.all;
 USE ieee.std_logic_unsigned.all;
 
 ENTITY contMem IS
-  PORT (add:  IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+  PORT (
+        -- from bin counter 3 bits 
+        add:  IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+        -- output from contMem
         dOut: OUT STD_LOGIC_VECTOR (10 DOWNTO 0));
 END contMem;
 
@@ -12,14 +15,15 @@ ARCHITECTURE behavior OF contMem IS
 BEGIN
   PROCESS (add)
     TYPE CMem IS ARRAY(0 TO 7) OF STD_LOGIC_VECTOR (10 DOWNTO 0);
-    VARIABLE prog: CMem := (CONV_STD_LOGIC_VECTOR (16#5#, 11),  -- nRst = 1   nSetO = 0   nEnClk = 1   00
-                            CONV_STD_LOGIC_VECTOR (16#7#, 11),  -- nRst = 1   nSetO = 1   nEnClk = 1   01
-                            CONV_STD_LOGIC_VECTOR (16#7#, 11),  -- nRst = 1   nSetO = 1   nEnClk = 1   02
-                            CONV_STD_LOGIC_VECTOR (16#7#, 11),  -- nRst = 1   nSetO = 1   nEnClk = 1   03
-                            CONV_STD_LOGIC_VECTOR (16#7#, 11),  -- nRst = 1   nSetO = 1   nEnClk = 1   04
-                            CONV_STD_LOGIC_VECTOR (16#7#, 11),  -- nRst = 1   nSetO = 1   nEnClk = 1   05
-                            CONV_STD_LOGIC_VECTOR (16#7#, 11),  -- nRst = 1   nSetO = 1   nEnClk = 1   06
-                            CONV_STD_LOGIC_VECTOR (16#7#, 11));  -- nRst = 1   nSetO = 1   nEnClk = 1   07
+    VARIABLE prog: CMem := (CONV_STD_LOGIC_VECTOR (16#5#, 11),    -- nRst = 1   nSetO = 0   nEnClk = 1   Start      00000000|000
+                            CONV_STD_LOGIC_VECTOR (16#7FF#, 11),  -- nRst = 1   nSetO = 1   nEnClk = 1   M4         11111111|111
+                            CONV_STD_LOGIC_VECTOR (16#7F#, 11),   -- nRst = 1   nSetO = 1   nEnClk = 1   M3         00001111|111
+                            CONV_STD_LOGIC_VECTOR (16#19F#, 11),  -- nRst = 1   nSetO = 1   nEnClk = 1   M2         00011001|111       
+                            CONV_STD_LOGIC_VECTOR (16#2AE#, 11),  -- nRst = 1   nSetO = 1   nEnClk = 0   M1         00101010|111
+                            CONV_STD_LOGIC_VECTOR (16#6#, 11),    -- nRst = 1   nSetO = 1   nEnClk = 0   REZ        00000000|110
+                            CONV_STD_LOGIC_VECTOR (16#1#, 11),    -- nRst = 0   nSetO = 0   nEnClk = 1   RESET      00000000|001
+									          CONV_STD_LOGIC_VECTOR (16#7#, 11)     -- nRst = 1   nSetO = 1   nEnClk = 1   NOP        00000000|111
+                            );  
                             
     VARIABLE pos: INTEGER;
   BEGIN
@@ -41,7 +45,7 @@ ENTITY control IS
         nRst:  OUT STD_LOGIC;
         nSetO: OUT STD_LOGIC;
         clkO:  OUT STD_LOGIC
-        f:     OUT STD_LOGIC_VECTOR (7 DOWNTO 0));
+        y:     OUT STD_LOGIC_VECTOR (7 DOWNTO 0));
 END control;
 
 ARCHITECTURE structure OF control IS
@@ -66,5 +70,5 @@ BEGIN
   nad3: gateNand2 PORT MAP (nGRst, cLines(1), iNSetO);
   nad4: gateNand2 PORT MAP (clk, iNSetO, nSetO);
   nord: gateNor2  PORT MAP (clk, cLines(0), clkO);
-  f <= cLines(10 DOWNTO 3);
+  y <= cLines(10 DOWNTO 3);
 END structure;
