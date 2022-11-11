@@ -91,7 +91,8 @@ USE simpleLogic.all;
 ENTITY decoder_parallel IS
 	PORT( 	y: IN STD_LOGIC_VECTOR(7 DOWNTO 0); --Encoded message
 				m: OUT STD_LOGIC_VECTOR(3 DOWNTO 0); --Decoded message
-				v: OUT STD_LOGIC); --Code validation bit
+				v: OUT STD_LOGIC;
+				distance: OUT STD_LOGIC); --Code validation bit
 END decoder_parallel;
 
 ARCHITECTURE structure OF decoder_parallel IS
@@ -104,10 +105,36 @@ ARCHITECTURE structure OF decoder_parallel IS
 					v										 : OUT STD_LOGIC);
 		END COMPONENT;
 		
-		COMPONENT gateAND4 
+		COMPONENT gateAND3 
+			PORT (x2, x1, x0 : IN STD_LOGIC;
+					y 			  		: OUT STD_LOGIC);
+		END COMPONENT;
+		
+		COMPONENT gateAND2 
+			PORT (x1, x0 : IN STD_LOGIC;
+					y 			  		: OUT STD_LOGIC);
+		END COMPONENT;
+		
+		COMPONENT gateOR3 
+			PORT (x2, x1, x0 : IN STD_LOGIC;
+					y 			  		: OUT STD_LOGIC);
+		END COMPONENT;
+		
+		COMPONENT gateXOR4
 			PORT (x3, x2, x1, x0 : IN STD_LOGIC;
 					y 			  		: OUT STD_LOGIC);
 		END COMPONENT;
+		
+		COMPONENT gateXOR2
+			PORT (x1, x0 : IN STD_LOGIC;
+					y 			  		: OUT STD_LOGIC);
+		END COMPONENT;
+		
+		COMPONENT gateNOT
+		PORT (x0 : IN STD_LOGIC;
+				y : OUT STD_LOGIC);
+		END COMPONENT;
+	
 		
 		--Signals
 			--Message particular and validation bits
@@ -115,24 +142,51 @@ ARCHITECTURE structure OF decoder_parallel IS
 		SIGNAL m3_b, m3_v: STD_LOGIC;
 		SIGNAL m2_b, m2_v: STD_LOGIC;
 		SIGNAL m1_b, m1_v: STD_LOGIC;
-
+		SIGNAL d1,d2,d3,d,d_n,c11,c12,c13,c14,c22,c23,c24,c32,c33,c34 : STD_LOGIC;
+		SIGNAL frag1, frag2: STD_LOGIC;
+ 
 BEGIN
 	
 		--Get particular bit 4 of m (Majority rule)
-		m4: bit_decoder PORT MAP (y(0), y(1), y(2), y(3), y(4), y(5), y(6), y(7), m4_b, m4_v);
-		
-		--Get particular bit 3 of m (Majority rule)
-		m3: bit_decoder PORT MAP (y(0), y(2), y(1), y(3), y(4), y(6), y(5), y(7), m3_b, m3_v);
-		
-		--Get particular bit 2 of m (Majority rule)
-		m2: bit_decoder PORT MAP (y(0), y(4), y(1), y(5), y(2), y(6), y(3), y(7), m2_b, m2_v);
-		
-		--Get particular bit 1 of m (Nearest neighbour rule) (???)
 		m1: bit_decoder PORT MAP (y(0), y(1), y(2), y(3), y(4), y(5), y(6), y(7), m1_b, m1_v);
 		
-				--Decoded message and validation bit
-		validity : gateAND4 PORT MAP (m4_v, m3_v, m2_v, m1_v, v);
+		--Get particular bit 3 of m (Majority rule)
+		m2: bit_decoder PORT MAP (y(0), y(2), y(1), y(3), y(4), y(6), y(5), y(7), m2_b, m2_v);
 		
-		m <= m4_b & m3_b & m2_b & m1_b;
+		--Get particular bit 2 of m (Majority rule)
+		m3: bit_decoder PORT MAP (y(0), y(4), y(1), y(5), y(2), y(6), y(3), y(7), m3_b, m3_v);
+		
+		--Get particular bit 1 of m (Nearest neighbour rule) 
+		c_11: gateXOR2 PORT MAP(y(0), y(1), c11);
+		
+		c_12: gateXOR2 PORT MAP(y(2), y(3), c12);
+		c_13: gateXOR2 PORT MAP(y(4), y(5), c13);
+		c_14: gateXOR2 PORT MAP(y(6), y(7), c14);
+		
+		c_22: gateXOR2 PORT MAP(y(1), y(3), c22);
+		c_23: gateXOR2 PORT MAP(y(4), y(6), c23);
+		c_24: gateXOR2 PORT MAP(y(5), y(7), c24);
+		
+		c_32: gateXOR2 PORT MAP(y(1), y(5), c32);
+		c_33: gateXOR2 PORT MAP(y(2), y(6), c33);
+		c_34: gateXOR2 PORT MAP(y(3), y(7), c34);
+		
+		d_1 : gateXOR4 PORT MAP(c12, c13, c14, m1_b, d1); 
+		d_2 : gateXOR4 PORT MAP(c22, c23, c24, m2_b, d2); 
+		d_3 : gateXOR4 PORT MAP(c32, c33, c34, m3_b, d3);
+		
+		dist_n: gateOR3 PORT MAP(d1, d2, d3, d_n);
+		dist : gateNOT PORT MAP(d_n, d);
+		
+		frag_1: gateXOR2 PORT MAP(c11, m1_b, frag1);
+		frag_2: gateAND2 PORT MAP(d, frag1, frag2);
+		
+		m4  : gateXOR2 PORT MAP(frag2, y(0), m4_b);
+		
+				--Decoded message and validation bit
+		validity : gateAND3 PORT MAP (m3_v, m2_v, m1_v, v);
+		
+		m <= m1_b & m2_b & m3_b & m4_b;
+		distance <= d;
 
 END structure;
