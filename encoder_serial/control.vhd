@@ -22,7 +22,7 @@ BEGIN
                             CONV_STD_LOGIC_VECTOR (16#2AE#, 11),  -- nRst = 1   nSetO = 1   nEnClk = 0   M1         00101010|111
                             CONV_STD_LOGIC_VECTOR (16#6#, 11),    -- nRst = 1   nSetO = 1   nEnClk = 0   REZ        00000000|110
                             CONV_STD_LOGIC_VECTOR (16#1#, 11),    -- nRst = 0   nSetO = 0   nEnClk = 1   RESET      00000000|001
-									          CONV_STD_LOGIC_VECTOR (16#7#, 11)     -- nRst = 1   nSetO = 1   nEnClk = 1   NOP        00000000|111
+									 CONV_STD_LOGIC_VECTOR (16#7#, 11)     -- nRst = 1   nSetO = 1   nEnClk = 1   NOP        00000000|111
                             );  
                             
     VARIABLE pos: INTEGER;
@@ -44,7 +44,7 @@ ENTITY control IS
         add:   IN STD_LOGIC_VECTOR (2 DOWNTO 0);
         nRst:  OUT STD_LOGIC;
         nSetO: OUT STD_LOGIC;
-        clkO:  OUT STD_LOGIC
+        clkO:  OUT STD_LOGIC;
         y:     OUT STD_LOGIC_VECTOR (7 DOWNTO 0));
 END control;
 

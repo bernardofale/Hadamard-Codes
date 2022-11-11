@@ -19,8 +19,8 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
 ENTITY gateAnd8 IS
-  PORT (x1, x2, x3, x4, x5, x6, x7, x8: IN STD_LOGIC;
-        y:                            OUT STD_LOGIC);
+  PORT (x1, x2: 	IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+        y:   		OUT STD_LOGIC_VECTOR (7 DOWNTO 0));
 END gateAnd8;
 
 ARCHITECTURE logicFunction OF gateAnd8 IS
@@ -59,8 +59,8 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
 ENTITY gateXor8 IS
-  PORT (x1, x2, x3, x4, x5, x6, x7, x8: IN STD_LOGIC;
-        y:                            OUT STD_LOGIC);
+  PORT (x1, x2: 	IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+        y:     	OUT STD_LOGIC_VECTOR (7 DOWNTO 0));
 END gateXor8;
 
 ARCHITECTURE logicFunction OF gateXor8 IS
@@ -105,4 +105,17 @@ END gateNor2;
 ARCHITECTURE logicFunction OF gateNor2 IS
 BEGIN
   y <= NOT (x1 OR x2);
+END logicFunction;
+
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+
+ENTITY gateOR2 IS
+  PORT (x1, x2: IN STD_LOGIC;
+        y:      OUT STD_LOGIC);
+END gateOr2;
+
+ARCHITECTURE logicFunction OF gateOR2 IS
+BEGIN
+  y <= x1 OR x2;
 END logicFunction;
