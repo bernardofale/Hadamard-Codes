@@ -14,15 +14,15 @@ END contMem;
 ARCHITECTURE behavior OF contMem IS
 BEGIN
   PROCESS (add)
-    TYPE CMem IS ARRAY(0 TO 7) OF STD_LOGIC_VECTOR (10 DOWNTO 0);
-    VARIABLE prog: CMem := (CONV_STD_LOGIC_VECTOR (16#5#, 11),    -- nRst = 1   nSetO = 0   nEnClk = 1   Start      00000000|101
-                            CONV_STD_LOGIC_VECTOR (16#7FF#, 11),  -- nRst = 1   nSetO = 1   nEnClk = 1   M4         11111111|111
-                            CONV_STD_LOGIC_VECTOR (16#7F#, 11),   -- nRst = 1   nSetO = 1   nEnClk = 1   M3         00001111|111
-                            CONV_STD_LOGIC_VECTOR (16#19F#, 11),  -- nRst = 1   nSetO = 1   nEnClk = 1   M2         00110011|111       
-                            CONV_STD_LOGIC_VECTOR (16#2AE#, 11),  -- nRst = 1   nSetO = 1   nEnClk = 0   M1         01010101|110
-                            CONV_STD_LOGIC_VECTOR (16#6#, 11),    -- nRst = 1   nSetO = 1   nEnClk = 0   REZ        00000000|110
-                            CONV_STD_LOGIC_VECTOR (16#1#, 11),    -- nRst = 0   nSetO = 0   nEnClk = 1   RESET      00000000|001
-									 CONV_STD_LOGIC_VECTOR (16#7#, 11)     -- nRst = 1   nSetO = 1   nEnClk = 1   NOP        00000000|111
+    TYPE CMem IS ARRAY(0 TO 7) OF STD_LOGIC_VECTOR (10 DOWNTO 0);									--   01234567
+    VARIABLE prog: CMem := ("00000000101",   -- nRst = 1   nSetO = 0   nEnClk = 1   Start      00000000|101
+                            "11111111111",  	-- nRst = 1   nSetO = 1   nEnClk = 1   M4         11111111|111
+                            "00001111111",   -- nRst = 1   nSetO = 1   nEnClk = 1   M3         00001111|111
+                            "00110011111",  	-- nRst = 1   nSetO = 1   nEnClk = 1   M2         00110011|111       
+                            "01010101110",  	-- nRst = 1   nSetO = 1   nEnClk = 0   M1         01010101|110
+                            "00000000110",   -- nRst = 1   nSetO = 1   nEnClk = 0   REZ        00000000|110
+                            "00000000001",   -- nRst = 0   nSetO = 0   nEnClk = 1   RESET      00000000|001
+									 "00000000111"    -- nRst = 1   nSetO = 1   nEnClk = 1   NOP        00000000|111
                             );  
                             
     VARIABLE pos: INTEGER;
