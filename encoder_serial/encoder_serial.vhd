@@ -24,10 +24,6 @@ END encoder_serial;
 
 -- Encoder serial
 ARCHITECTURE structure of encoder_serial is
-    -- Signals
-    SIGNAL s_NSetO, s_NRst, s_Q, clkO, valid: STD_LOGIC;
-    SIGNAL count:  STD_LOGIC_VECTOR (2 DOWNTO 0);
-    SIGNAL s_Q8, s_and2xor, s_xorIn, s_xorOut, s_k, s_code: STD_LOGIC_VECTOR (7 DOWNTO 0);
 
     -- Components
     COMPONENT flipFlopDPET
@@ -103,6 +99,11 @@ ARCHITECTURE structure of encoder_serial is
 		  y	: OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
     );
     END COMPONENT;
+	 
+	  -- Signals
+    SIGNAL s_NSetO, s_NRst, s_Q, clkO, valid: STD_LOGIC;
+    SIGNAL count:  STD_LOGIC_VECTOR (2 DOWNTO 0);
+    SIGNAL s_Q8, s_and2xor, s_xorIn, s_xorOut, s_k, s_code: STD_LOGIC_VECTOR (7 DOWNTO 0);
 
     -- Instances
 BEGIN
