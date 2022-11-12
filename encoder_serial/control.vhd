@@ -16,10 +16,10 @@ BEGIN
   PROCESS (add)
     TYPE CMem IS ARRAY(0 TO 7) OF STD_LOGIC_VECTOR (10 DOWNTO 0);									--   01234567
     VARIABLE prog: CMem := ("00000000101",   -- nRst = 1   nSetO = 0   nEnClk = 1   Start      00000000|101
-                            "11111111111",  	-- nRst = 1   nSetO = 1   nEnClk = 1   M4         11111111|111
-                            "00001111111",   -- nRst = 1   nSetO = 1   nEnClk = 1   M3         00001111|111
-                            "00110011111",  	-- nRst = 1   nSetO = 1   nEnClk = 1   M2         00110011|111       
-                            "01010101110",  	-- nRst = 1   nSetO = 1   nEnClk = 0   M1         01010101|110
+                            "01010101111",  	-- nRst = 1   nSetO = 1   nEnClk = 1   M1         01010101|111
+                            "00110011111",   -- nRst = 1   nSetO = 1   nEnClk = 1   M2         00110011|111
+                            "00001111111",  	-- nRst = 1   nSetO = 1   nEnClk = 1   M3         00001111|111       
+                            "11111111110",  	-- nRst = 1   nSetO = 1   nEnClk = 0   M4         11111111|110
                             "00000000110",   -- nRst = 1   nSetO = 1   nEnClk = 0   REZ        00000000|110
                             "00000000001",   -- nRst = 0   nSetO = 0   nEnClk = 1   RESET      00000000|001
 									 "00000000111"    -- nRst = 1   nSetO = 1   nEnClk = 1   NOP        00000000|111
