@@ -91,8 +91,7 @@ USE simpleLogic.all;
 ENTITY decoder_parallel IS
 	PORT( 	y: IN STD_LOGIC_VECTOR(7 DOWNTO 0); --Encoded message
 				m: OUT STD_LOGIC_VECTOR(3 DOWNTO 0); --Decoded message
-				v: OUT STD_LOGIC;
-				distance: OUT STD_LOGIC); --Code validation bit
+				v: OUT STD_LOGIC); --Code validation bit
 END decoder_parallel;
 
 ARCHITECTURE structure OF decoder_parallel IS
@@ -187,6 +186,5 @@ BEGIN
 		validity : gateAND3 PORT MAP (m3_v, m2_v, m1_v, v);
 		
 		m <= m1_b & m2_b & m3_b & m4_b;
-		distance <= d;
 
 END structure;
