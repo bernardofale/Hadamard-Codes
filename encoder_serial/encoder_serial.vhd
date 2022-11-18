@@ -17,8 +17,7 @@ ENTITY encoder_serial IS
         nGRst: IN STD_LOGIC;
         clk : IN STD_LOGIC;
         m : IN STD_LOGIC;
-        x : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-        v : OUT STD_LOGIC
+        x : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
     );
 END encoder_serial;
 
@@ -101,7 +100,7 @@ ARCHITECTURE structure of encoder_serial is
     END COMPONENT;
 	 
 	  -- Signals
-    SIGNAL s_NSetO, s_NRst, s_Q, clkO, valid: STD_LOGIC;
+    SIGNAL s_NSetO, s_NRst, s_Q, clkO: STD_LOGIC;
     SIGNAL count:  STD_LOGIC_VECTOR (2 DOWNTO 0);
     SIGNAL s_Q8, s_and2xor, s_xorIn, s_xorOut, s_k, s_code: STD_LOGIC_VECTOR (7 DOWNTO 0);
 
@@ -116,9 +115,8 @@ BEGIN
     control_unit:  control  PORT MAP (nGRst, clk, count, s_NRst, s_NSetO, clkO, s_k);
     ParReg8O: ParReg_8bit PORT MAP (s_NSetO, '1', clkO, s_xorOut, s_code);
 
-    -- Outputs
+    -- Output
     x <= s_code;
-    valid1: gateAnd2 PORT MAP (count(2), count(1),valid);
-    valid2: gateOr2 PORT MAP(valid, clkO, v);
+
 END structure;
     

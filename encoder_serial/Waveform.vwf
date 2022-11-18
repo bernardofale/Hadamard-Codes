@@ -1,13 +1,13 @@
 /*<simulation_settings>
-<ftestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off encoder_serial -c encoder_serial --vector_source="/home/bernardo/Documents/AAD-ASS1-Hadamardcodes/encoder_serial/Waveform.vwf" --testbench_file="/home/bernardo/Documents/AAD-ASS1-Hadamardcodes/encoder_serial/simulation/qsim/Waveform.vwf.vht"</ftestbench_cmd>
-<ttestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off encoder_serial -c encoder_serial --vector_source="/home/bernardo/Documents/AAD-ASS1-Hadamardcodes/encoder_serial/Waveform.vwf" --testbench_file="/home/bernardo/Documents/AAD-ASS1-Hadamardcodes/encoder_serial/simulation/qsim/Waveform.vwf.vht"</ttestbench_cmd>
-<fnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory="/home/bernardo/Documents/AAD-ASS1-Hadamardcodes/encoder_serial/simulation/qsim/" encoder_serial -c encoder_serial</fnetlist_cmd>
-<tnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=off --flatten_buses=off --timescale=1ps --tool=modelsim_oem --format=vhdl --output_directory="/home/bernardo/Documents/AAD-ASS1-Hadamardcodes/encoder_serial/simulation/qsim/" encoder_serial -c encoder_serial</tnetlist_cmd>
+<ftestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off encoder_serial -c encoder_serial --vector_source="C:/Users/Miinds/Documents/GitHub/AAD-ASS1-Hadamardcodes/encoder_serial/Waveform.vwf" --testbench_file="C:/Users/Miinds/Documents/GitHub/AAD-ASS1-Hadamardcodes/encoder_serial/simulation/qsim/Waveform.vwf.vht"</ftestbench_cmd>
+<ttestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off encoder_serial -c encoder_serial --vector_source="C:/Users/Miinds/Documents/GitHub/AAD-ASS1-Hadamardcodes/encoder_serial/Waveform.vwf" --testbench_file="C:/Users/Miinds/Documents/GitHub/AAD-ASS1-Hadamardcodes/encoder_serial/simulation/qsim/Waveform.vwf.vht"</ttestbench_cmd>
+<fnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory="C:/Users/Miinds/Documents/GitHub/AAD-ASS1-Hadamardcodes/encoder_serial/simulation/qsim/" encoder_serial -c encoder_serial</fnetlist_cmd>
+<tnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=off --flatten_buses=off --timescale=1ps --tool=modelsim_oem --format=vhdl --output_directory="C:/Users/Miinds/Documents/GitHub/AAD-ASS1-Hadamardcodes/encoder_serial/simulation/qsim/" encoder_serial -c encoder_serial</tnetlist_cmd>
 <modelsim_script>onerror {exit -code 1}
 vlib work
 vcom -work work encoder_serial.vho
 vcom -work work Waveform.vwf.vht
-vsim  -c -t 1ps -L cycloneive -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.encoder_serial_vhd_vec_tst
+vsim -c -t 1ps -L cycloneive -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.encoder_serial_vhd_vec_tst
 vcd file -direction encoder_serial.msim.vcd
 vcd add -internal encoder_serial_vhd_vec_tst/*
 vcd add -internal encoder_serial_vhd_vec_tst/i1/*
@@ -20,7 +20,6 @@ proc simTimestamp {} {
 after 2500 simTimestamp
 run -all
 quit -f
-
 </modelsim_script>
 <modelsim_script_timing>onerror {exit -code 1}
 vlib work
@@ -39,7 +38,6 @@ proc simTimestamp {} {
 after 2500 simTimestamp
 run -all
 quit -f
-
 </modelsim_script_timing>
 <hdl_lang>vhdl</hdl_lang>
 </simulation_settings>*/
@@ -71,7 +69,7 @@ HEADER
 	VERSION = 1;
 	TIME_UNIT = ns;
 	DATA_OFFSET = 0.0;
-	DATA_DURATION = 200.0;
+	DATA_DURATION = 160.0;
 	SIMULATION_TIME = 0.0;
 	GRID_PHASE = 0.0;
 	GRID_PERIOD = 10.0;
@@ -105,16 +103,6 @@ SIGNAL("nGRst")
 	WIDTH = 1;
 	LSB_INDEX = -1;
 	DIRECTION = INPUT;
-	PARENT = "";
-}
-
-SIGNAL("v")
-{
-	VALUE_TYPE = NINE_LEVEL_BIT;
-	SIGNAL_TYPE = SINGLE_BIT;
-	WIDTH = 1;
-	LSB_INDEX = -1;
-	DIRECTION = OUTPUT;
 	PARENT = "";
 }
 
@@ -215,7 +203,7 @@ TRANSITION_LIST("clk")
 		REPEAT = 1;
 		NODE
 		{
-			REPEAT = 10;
+			REPEAT = 8;
 			LEVEL 0 FOR 10.0;
 			LEVEL 1 FOR 10.0;
 		}
@@ -227,13 +215,8 @@ TRANSITION_LIST("m")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 0 FOR 10.0;
-		LEVEL 1 FOR 10.0;
-		LEVEL 0 FOR 10.0;
-		LEVEL 1 FOR 10.0;
-		LEVEL 0 FOR 10.0;
-		LEVEL 1 FOR 10.0;
-		LEVEL 0 FOR 140.0;
+		LEVEL 1 FOR 60.0;
+		LEVEL 0 FOR 100.0;
 	}
 }
 
@@ -242,16 +225,7 @@ TRANSITION_LIST("nGRst")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 1 FOR 200.0;
-	}
-}
-
-TRANSITION_LIST("v")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL X FOR 200.0;
+		LEVEL 1 FOR 160.0;
 	}
 }
 
@@ -260,7 +234,7 @@ TRANSITION_LIST("x[7]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 200.0;
+		LEVEL X FOR 160.0;
 	}
 }
 
@@ -269,7 +243,7 @@ TRANSITION_LIST("x[6]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 200.0;
+		LEVEL X FOR 160.0;
 	}
 }
 
@@ -278,7 +252,7 @@ TRANSITION_LIST("x[5]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 200.0;
+		LEVEL X FOR 160.0;
 	}
 }
 
@@ -287,7 +261,7 @@ TRANSITION_LIST("x[4]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 200.0;
+		LEVEL X FOR 160.0;
 	}
 }
 
@@ -296,7 +270,7 @@ TRANSITION_LIST("x[3]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 200.0;
+		LEVEL X FOR 160.0;
 	}
 }
 
@@ -305,7 +279,7 @@ TRANSITION_LIST("x[2]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 200.0;
+		LEVEL X FOR 160.0;
 	}
 }
 
@@ -314,7 +288,7 @@ TRANSITION_LIST("x[1]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 200.0;
+		LEVEL X FOR 160.0;
 	}
 }
 
@@ -323,7 +297,7 @@ TRANSITION_LIST("x[0]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 200.0;
+		LEVEL X FOR 160.0;
 	}
 }
 
@@ -356,21 +330,12 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "v";
+	CHANNEL = "x";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 3;
 	TREE_LEVEL = 0;
-}
-
-DISPLAY_LINE
-{
-	CHANNEL = "x";
-	EXPAND_STATUS = COLLAPSED;
-	RADIX = Binary;
-	TREE_INDEX = 4;
-	TREE_LEVEL = 0;
-	CHILDREN = 5, 6, 7, 8, 9, 10, 11, 12;
+	CHILDREN = 4, 5, 6, 7, 8, 9, 10, 11;
 }
 
 DISPLAY_LINE
@@ -378,9 +343,9 @@ DISPLAY_LINE
 	CHANNEL = "x[7]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 5;
+	TREE_INDEX = 4;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 3;
 }
 
 DISPLAY_LINE
@@ -388,9 +353,9 @@ DISPLAY_LINE
 	CHANNEL = "x[6]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 6;
+	TREE_INDEX = 5;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 3;
 }
 
 DISPLAY_LINE
@@ -398,9 +363,9 @@ DISPLAY_LINE
 	CHANNEL = "x[5]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 7;
+	TREE_INDEX = 6;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 3;
 }
 
 DISPLAY_LINE
@@ -408,9 +373,9 @@ DISPLAY_LINE
 	CHANNEL = "x[4]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 8;
+	TREE_INDEX = 7;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 3;
 }
 
 DISPLAY_LINE
@@ -418,9 +383,9 @@ DISPLAY_LINE
 	CHANNEL = "x[3]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 9;
+	TREE_INDEX = 8;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 3;
 }
 
 DISPLAY_LINE
@@ -428,9 +393,9 @@ DISPLAY_LINE
 	CHANNEL = "x[2]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 10;
+	TREE_INDEX = 9;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 3;
 }
 
 DISPLAY_LINE
@@ -438,9 +403,9 @@ DISPLAY_LINE
 	CHANNEL = "x[1]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 11;
+	TREE_INDEX = 10;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 3;
 }
 
 DISPLAY_LINE
@@ -448,9 +413,9 @@ DISPLAY_LINE
 	CHANNEL = "x[0]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 12;
+	TREE_INDEX = 11;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 3;
 }
 
 TIME_BAR
